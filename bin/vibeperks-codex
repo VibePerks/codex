@@ -1,0 +1,29 @@
+#!/bin/sh
+# VibePerks Codex launcher invoked by the hooks / shell integration. A clone-based
+# install ships source + this script (no host binary), so we resolve a runnable binary:
+#   1) a built/cached binary (bin/vibeperks-codex.real)
+#   2) a prebuilt distribution binary for this platform (bin/vibeperks-codex-<os>-<arch>)
+#   3) build from src/ if Go is available
+# Failures stay quiet so the host CLI is never broken.
+set -eu
+
+root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+bin="$root/bin"
+real="$bin/vibeperks-codex.real"
+
+if [ -x "$real" ]; then exec "$real" "$@"; fi
+
+os=$(uname -s | tr '[:upper:]' '[:lower:]')
+arch=$(uname -m)
+case "$arch" in x86_64|amd64) arch=amd64;; aarch64|arm64) arch=arm64;; esac
+case "$os" in darwin) os=darwin;; linux) os=linux;; mingw*|msys*|cygwin*) os=windows;; esac
+
+pre="$bin/vibeperks-codex-$os-$arch"
+[ "$os" = windows ] && pre="$pre.exe"
+if [ -x "$pre" ]; then exec "$pre" "$@"; fi
+
+if command -v go >/dev/null 2>&1; then
+  ( cd "$root" && DIST=0 sh ./build.sh >/dev/null 2>&1 ) || exit 0
+  [ -x "$real" ] && exec "$real" "$@"
+fi
+exit 0
