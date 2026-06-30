@@ -66,9 +66,12 @@ func meta(sessionID string) core.Meta {
 }
 
 // cmdRender prints the cached ad line for the terminal title / prompt surface. It makes
-// no network call and marks the ad as displayed, so the line is always instant.
+// no network call and marks the ad as displayed, so the line is always instant. When the
+// device token was rejected it prints a sign-in notice instead. The text is left plain
+// (no ANSI) because the shell integration also writes it into the terminal title, where
+// escape codes would corrupt the title.
 func cmdRender(dir string) error {
-	adLine, err := core.Render(dir, time.Now().Unix())
+	adLine, _, err := core.Render(dir, time.Now().Unix(), "vibeperks-codex login")
 	if err != nil {
 		return err
 	}
