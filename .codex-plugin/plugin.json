@@ -1,7 +1,10 @@
 {
   "name": "vibeperks-codex",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "VibePerks for Codex: a quiet one-line sponsor in your Codex terminal title and prompt that earns you credit while you code. No code, prompts, or file contents ever leave your machine.",
-  "author": { "name": "VibePerks", "email": "contact@vibeperks.ai" },
+  "author": {
+    "name": "VibePerks",
+    "email": "contact@vibeperks.ai"
+  },
   "license": "PolyForm-Shield-1.0.0"
 }
