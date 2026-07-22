@@ -1,0 +1,7 @@
+﻿# Only the launcher (bin/vibeperks-codex) is committed. Binaries live in the
+# GitHub Release and are downloaded/built on first use, never committed.
+vibeperks-codex.real
+vibeperks-codex.real.download.*
+*.exe
+# Cross-compiled distribution binaries (published to the GitHub Release).
+vibeperks-codex-*
