@@ -102,7 +102,7 @@ func cmdRefresh(dir string) error {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	return core.Refresh(ctx, dir, core.NewClient(cfg), meta(sessionArg()), time.Now().Unix(), true)
+	return core.Refresh(ctx, dir, core.NewClient(cfg), meta(sessionArg()), time.Now().Unix())
 }
 
 // cmdStop records the currently displayed ad's impression and flushes. Codex has no Stop
